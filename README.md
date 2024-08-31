@@ -59,6 +59,7 @@ Berikut tata cara pengumpulan tugas praktikum di repositori ini.
 
 ## Catatan Tambahan
 - Batas asistensi tugas maksimal 2 pekan setelah tugas diberikan
+- Pesan Commit sebaiknya yang bisa dipahami kedepannya
 - Jika ingin mengumpulkan tugas dengan **Github Desktop / Github Web**, diperbolehkan
 - Jika ada yang ingin ditanyakan silahkan bertanya di GB Asistensi / Private Chat
 - Kalo asistensi atau ketemu santai saja, saya kating yang baik ^-^
