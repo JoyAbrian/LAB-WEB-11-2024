@@ -28,7 +28,10 @@ Berikut tata cara pengumpulan tugas praktikum di repositori ini.
    cd <NIM>
    ```
 
-2. Masukkan file tugas kalian ke dalam folder NIM.
+2. Masukkan file tugas kalian ke dalam folder NIM dengan nama folder
+   ```
+   <Praktikum-n>
+   ```
 
 3. Lakukan commit
    ```bash
