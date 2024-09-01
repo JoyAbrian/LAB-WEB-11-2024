@@ -1,4 +1,4 @@
-# LAB-WEB-Flowbite-2024
+# LAB-WEB-11-2024
 Repositori ini adalah tempat pengumpulan tugas-tugas praktikum mulai dari praktikum pertama hingga tugas final mata kuliah Praktikum Pemrograman Web 2024.
 
 ## Cara Pengumpulan
