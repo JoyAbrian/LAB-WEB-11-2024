@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">  <!-- Menetapkan pengodean karakter -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- Mengatur viewport untuk responsivitas -->
+    <title>Biodata Pribadi Hery Mangalik</title>  <!-- Judul halaman yang muncul di tab browser -->
+</head>
+<body>
+    <h1>&#128218; Biodata Pribadi &#128218;</h1>  <!-- Judul utama dengan emoji buku -->
+    <blink>Selamat datang di halaman biodata Hery Mangalik!</blink>
+
+    <table>  <!-- Tabel utama untuk layout -->
+        <tr>  <!-- Baris tabel -->
+            <td>  <!-- Kolom kiri -->
+                <fieldset>  <!-- Grup elemen form dengan border -->
+                    <legend><b>&#127891; Data Diri</b></legend>
+                    <ul>  <!-- Daftar tidak berurutan -->
+                        <li><b>Nama:</b> Hery Mangalik</li>
+                        <li><b>Usia:</b> 19 Tahun</li>
+                        <li><b>Profesi:</b> Tidak Ada</li>
+                    </ul>
+                </fieldset>
+
+                <fieldset>
+                    <legend><b>&#127828; Makanan Favorit</b></legend>
+                    <ol>  <!-- Daftar berurutan -->
+                        <li>Kayu</li>
+                        <li>Batu</li>
+                    </ol>
+                </fieldset>
+
+                <fieldset>
+                    <legend><b>&#127925; Lagu Favorit</b></legend>
+                    <audio controls>  <!-- Elemen audio dengan kontrol pemutaran -->
+                        <source src="Jason_Mraz_-_Im_Yours_CeeNaija.com_.mp3" type="audio/mpeg">
+                    </audio>
+                </fieldset>
+
+                <fieldset>
+                    <legend><b>&#128172; Kutipan Favorit</b></legend>
+                    <blockquote>  <!-- Elemen untuk kutipan -->
+                        <i>"Lebih baik dibenci dan ditakuti,jika kamu mau melihat sifat seseorang!"</i>
+                        <br>  <!-- Baris baru -->
+                        - HM
+                    </blockquote>
+                </fieldset>
+            </td>
+            <td>  <!-- Kolom kanan -->
+                <fieldset>
+                    <legend><b>&#128247; Foto</b></legend>
+                    <center>  <!--memusatkan konten-->
+                        <img src="wallpaperflare.com_wallpaper (4).jpg" alt="Foto Pribadi" width="200"> <!-- Gambar dengan lebar 200px -->
+                    </center>
+                </fieldset>
+
+                <fieldset>
+                    <legend><b>&#127918; Game Sederhana</b></legend>
+                    <p>
+                        Tebak angka 1-5:<br>
+                        <input type="number" id="guessInput" min="1" max="5">  <!-- Input angka dengan batasan 1-5 -->
+                        <button onclick="checkGuess()">Tebak!</button>  <!-- Tombol dengan event onclick -->
+                    </p>
+                    <p id="result"></p>  <!-- Paragraf untuk menampilkan hasil tebakan -->
+                </fieldset>
+            </td>
+        </tr>
+    </table>
+
+    <hr>  <!-- Garis horizontal pemisah -->
+
+    <p>
+        <a href="labpusing22.html">&#128064; Lihat Tokoh Favorit Saya &#128064;</a>  <!-- Tautan ke halaman lain dengan emoji mata -->
+    </p>
+
+    <details>  <!-- Elemen details untuk konten yang bisa dibuka/tutup -->
+        <summary><b>Klik untuk melihat keahlian tersembunyi!</b></summary> <!-- Judul yang bisa diklik -->
+        <p>Saya bisa mengetahui sifat seseorang</p> <!-- Konten tersembunyi -->
+    </details>
+
+    <hr>
+
+    <footer>  <!-- Footer halaman -->
+        <small>&copy; 2024 Hery Mangalik. Semua hak cipta dilindungi.</small><br>  <!-- Teks hak cipta -->
+        <small>
+            Kunjungi kami di: 
+            <a href="https://www.instagram.com/hery_mangalik?igsh=N2trbG53cWNxMzls"><img src="/api/placeholder/20/20" alt="Instagram" /></a>
+        </small>
+    </footer>
+
+    <script>
+        function checkGuess() {  // Fungsi JavaScript untuk game tebak angka
+            var guess = document.getElementById("guessInput").value;  // Mengambil nilai input
+            var correctNumber = Math.floor(Math.random() * 5) + 1;  // Menghasilkan angka acak 1-5
+            document.getElementById("result").innerHTML = guess == correctNumber
+                ? "Benar! Angka yang tepat adalah " + correctNumber  // Pesan jika tebakan benar
+                : "Maaf, coba lagi. Angka yang benar adalah " + correctNumber;
+        }
+    </script>
+</body>
+</html>
