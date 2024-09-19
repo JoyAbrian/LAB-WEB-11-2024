@@ -1,0 +1,232 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url(https://i.pinimg.com/474x/1f/ee/9a/1fee9ab5ca94b320c15b6446922ace6b.jpg);
+    background-size: cover;
+    font-family:'Gill Sans';
+    line-height: 1.6;
+    font-size: 20px;
+    
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+span{
+    color: palevioletred;
+}
+
+.kotak-nav {
+    background-color: rgb(73, 52, 94);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+}
+
+.kotak-nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+.kotak-nav a:hover {
+    text-decoration: underline;
+}
+
+.kotak-hero {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 50px;
+    flex-wrap: wrap;
+    height: auto;
+    max-width: 1200px;
+}
+
+.deskripsi{
+    margin-top: 80px;
+    text-align: left;
+    position: relative;
+    width: 50%; 
+    margin-right: 20px; 
+}
+
+.kotak-hero h2 {
+    font-size: 38px;
+    font-family: 'Franklin Gothic Medium';
+}
+
+.kotak-hero p {
+    font-size: 1em;
+} 
+
+.kotak-hero img {
+    width: 300px;
+    max-width: 100%;
+    margin-left: 20px;
+}
+
+.kotak-about, .galeri {
+    padding: 70px;
+}
+
+.kotak-teks{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.teks {
+    flex: 1;
+    min-width: 300px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 5px 4px rgba(56, 38, 70, 0.1);
+}
+
+.kotak-galery {
+    display: flex;
+    overflow-x : auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.kotak-galery img {
+    width: 250px;
+    height: auto;
+    margin-right: 40px;
+    border-radius: 30px;
+}
+
+.kotak-galery img:hover{
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.kotak-service2 {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.kotak-info {
+    width: 400px;
+    height: auto;
+    background-color: rgba(215, 192, 209, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+    margin: 20px;
+}
+
+.kotak-info h4{
+    text-align: center;
+}
+
+.kotak-info p{
+    font-style: italic;
+}
+
+.kotak-info a {
+    color: #ad8e9e;
+    text-decoration: none;
+}
+
+.kotak-info a:hover{
+    color: maroon;
+    text-decoration: underline;
+}
+
+.kotak-service{
+    padding: 70px;
+}
+
+.kotak-service h2 {
+    text-align: center;
+}
+
+footer {
+    background-color: #ad8e9e;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.footer-logo img {
+    width: 40px;
+    border-radius: 50%;
+}
+
+.footer-logo h4 {
+    font-size: 16px;
+}
+
+.footer-kontak {
+    font-size: 14px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 5px;
+}
+
+.footer-kontak p {
+    margin: 2px 0;
+}
+
+.footer-kontak a{
+    color: white;
+    text-decoration: none;
+}
+
+.footer-kontak a:hover{
+    color: maroon;
+    text-decoration: underline;
+}
+
+hr {
+    color: aliceblue;
+    height: 5px;
+}
+
+@media (max-width: 860px) {
+    .kotak-hero {
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+    }
+
+    .deskripsi, .kotak-hero img {
+        max-width: 100%;
+    }
+
+    .kotak-about {
+        column-count: 1;
+    }
+
+    .kotak-service2 {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .kotak-info {
+        width: 100%;
+        max-width: 400px;
+    }
+}
