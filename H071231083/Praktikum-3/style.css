@@ -1,0 +1,240 @@
+* {
+  /*Universal selector*/
+  margin: 0; /*meghapus margin dan padding bawaan pada semua elemen untuk memastikan keseragaman.*/
+  padding: 0;
+  box-sizing: border-box; /*agar padding dan border disertakan dalam ukuran elemen*/
+  font-family: Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth; /*membuat transisi scrol yg mulus*/
+  color: aqua;
+  background-color: rgb(0, 17, 26);
+}
+
+/* Bagian Navbar */
+header {
+  background-color: aqua;
+  position: fixed; /*melekat pada bagian atas*/
+  width: 100%;
+  display: flex;
+  z-index: 100; /*selalu berada di depan konten lainnya*/
+  padding: 20px;
+  /* top: 0; */
+  justify-content: center;
+}
+
+a {
+  text-decoration: none; /*menyembunyikan bagian garis bawah*/
+  padding: 20px;
+  color: rgba(0, 17, 26);
+}
+
+a:hover {
+  background-color: #ffffff;
+}
+
+/*Bagian Hero*/
+.hero {
+  background-color: rgb(0, 17, 26);
+  padding: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.hero h1 {
+  font-size: 2.5rem; /*teks diatur agar tampil sebagai teks yg sedang mengetik dgn menggunakan animasi typing*/
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  overflow: hidden;
+  border-right: 3px solid #333;
+  animation: typing 1s steps(14);
+}
+
+@keyframes typing {
+  /*Membuat efek teks yg tampak sedang mengetik dgn menyembunyikam sebagian teks dan krmudian menampilkannya secara bertahap*/
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0);
+  }
+}
+
+.hero p {
+  padding: 3px;
+  padding-top: 30px;
+}
+
+.hero-text {
+  max-width: 30%;
+}
+
+.hero-text h1 {
+  font-size: 18px;
+}
+
+.hero-text h2 {
+  font-size: 40px;
+}
+
+.hero img {
+  max-width: 1500px; /*mengatur lebar maksimum*/
+}
+
+/* Bagian Isi About dan Gallery */
+.content {
+  display: flex; /*mengatur konten utk ditampilkan sebagai flexbox dan dirata tengah*/
+  justify-content: center;
+}
+
+.judul {
+  margin-left: 320px;
+}
+/*menambah margin kiri utk mengatur posisi judul pada layar*/
+.judul2 {
+  margin-left: 195px;
+  margin-top: 100px;
+}
+
+.desk1 {
+  display: flex;
+  text-align: justify;
+  margin: 20px;
+  max-width: 600px;
+  /* padding: 0 20px; */
+  /* align-items: center; */
+  /* white-space: normal; */
+}
+
+.desk2 {
+  display: flex;
+  text-align: justify;
+  margin: 20px;
+  max-width: 600px;
+  /* padding: 0 20px; */
+  /* align-items: center; */
+  /* white-space: normal; */
+}
+
+.container {
+  /*mengatur gallery gambar untuk menggunakan grid layout dgn kolom yg bisa menyesuaikan ukuran minimal 400px perkolom. gambar-gambar ditetapkan dgn celah 10 px*/
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-gap: 10px;
+  margin: 5px 10% 100px 10%;
+}
+
+.list-image {
+  overflow: hidden; /*membatasi tampilan gambar didalam elemen .list-image. jika gambar melampaui batas kontainer, bagian yg keluar akan disembunyikan*/
+  position: relative;
+  display: flex;
+}
+
+.list-image img {
+  width: 100%;
+  transition: 0.5s;
+  /* height: auto; */
+}
+
+.list-image:hover img {
+  transform: scale(1.2); /*gambar akan diperbesar 1.2 kali ketika di hover*/
+}
+
+/* Bagian Footer */
+footer {
+  background-color: aqua;
+  color: rgb(32, 27, 26);
+  justify-content: space-between;
+  width: 100%;
+  display: flex;
+  padding: 20px;
+  /* flex-direction: row; */
+  /* text-align: center; */
+}
+
+.logo {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  margin-left: 50px;
+  justify-content: center;
+}
+
+.logo img {
+  width: 80px;
+  margin-right: 20px;
+  /* height: auto; */
+}
+
+/* .logo h3{
+  /* margin: 0; */
+  /* margin-right: 150px; */
+/* } */ 
+
+.contact {
+  /* align-items: flex-end; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact i {
+  margin-right: 200px;
+  font-size: 18px;
+  padding-top: 25px;
+  /* margin-bottom: 0; */
+}
+
+/* Responsif: Ketika lebar layar kurang dari 900px */
+@media screen and (max-width: 900px) {
+  .content {
+    display: contents;
+  }
+
+  .desk1 {
+    margin-left: 150px;
+    margin-right: 150px;
+  }
+
+  .desk2 {
+    margin: 10px 150px;
+  }
+
+  footer {
+    flex-direction: column;
+    text-align: center;
+    /* margin-top: 100px; */
+  }
+
+  .contact {
+    text-align: center;
+    margin-top: 10px;
+    display: none;
+  }
+}
+  /* .logo {
+    margin-left: 0;
+  } */
+
+  /* .contact p {
+    margin-right: 0;
+  } */
+
+
+/*jarak margin diatur agar lebih kecil*/
+/* @media screen and (max-width: 750px) {
+  .desk {
+    margin: 20px 130px;
+  }
+  .contact {
+    display: none;
+  }
+} */
