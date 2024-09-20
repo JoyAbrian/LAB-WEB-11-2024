@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login form in HTML & CSS</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <box-icon name='user'></box-icon>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        .wrapper {
+            width: 420px;
+            background: transparent;
+            backdrop-filter: blur(30px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.37);
+            color: #ffffff;
+            padding: 20px;
+        
+            border-radius: 20px;
+        }
+        
+        .wrapper h1 {
+            font-size: 36px;
+            text-align: center;
+        }
+        
+        .container {
+            margin: 5% auto 0;
+            text-align: center;
+            margin-right: 85px;
+        }
+        
+        .toggleswitch input {
+            display: none;
+        }
+        
+        .toggleswitch {
+            width: 70px;
+            height: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .toggleswitch .konten {
+            border: 2px solid purple;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50px;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .toggleswitch .konten::before {
+            background-color: white;
+            position: absolute;
+            content: '';
+            width: 25px;
+            height: 25px;
+            border-radius: 50px;
+            transition: all 0.2s ease-in-out;
+            left: 1px;
+            bottom: 1px;
+        }
+        
+        .toggleswitch input:checked + .konten {
+            background-color: purple;
+        }
+        
+        .toggleswitch input:checked + .konten::before {
+            background-color: white;
+            transform: translateX(40px);
+        }
+        
+        
+        .wrapper .input-box {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            margin: 30px 0;
+        }
+        
+        .wrapper .input-gender {
+            text-align: center;
+            padding-top: 10px;
+        }
+        
+        .wrapper .syarat-ketentuan {
+            padding-top: 15px;
+        }
+        
+        .input-box input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            border: 2px solid rgba(255, 255, 255, 2);
+            border-radius: 40px;
+            font-size: 16px;
+            color: #fff;
+            padding: 20px 45px 20px 20px;
+            margin-top: 6px;
+        }
+        
+        .input-box input::placeholder {
+            color: #fff;
+        }
+        
+        .input-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+        }
+        
+        .wrapper .btn {
+            width: 100%;
+            height: 45px;
+            border-radius: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+            border: none;
+            outline: none;
+            background: #fff;
+            color: #000;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 30px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .wrapper p {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        
+        <form id = "registrationForm" >
+            <H1>Formulir Pendaftaran</H1>
+            <div class="container">
+                <label class="toggleswitch">
+                    <input type="checkbox" id="toggle">
+                    <span class="konten"></span>
+                </label>
+            </div>
+            <div class="input-box">
+                <label>Nama Lengkap:</label><br>
+                <input type="text" id="nama" required>
+            </div>
+
+            <div class="input-box">
+                <label>Email:</label><br>
+                <input type="email" id="email" required>
+            </div>
+
+            <div class="input-box">
+                <label>Tanggal Lahir:</label><br>
+                <input type="date" id="tanggalLahir" required">
+            </div>
+
+            <div class="input-gender">
+                <label>Jenis Kelamin:</label><br>
+                <input type="radio" name="gender" value="Laki-Laki" id="genderLaki"><label for="Laki-Laki">Laki-Laki</label><br>
+                <input type="radio" name="gender" value="Perempuan" id="genderPerempuan"><label for="Perempuan">Perempuan</label>
+            </div>
+            
+            <div class=syarat-ketentuan>
+                <input type="checkbox" required>
+                <label>Saya menyetujui Syarat dan ketentuan.</label><br>
+            </div>
+
+            <button type="submit" class="btn">Daftar Sekarang</button>
+        </form>
+       
+        <p>Desain Formulir ini dirancang dengan fokus pada kemudahan penggunaan dan estetika modern. Tombol dan elemen formulir diatur dengan warna dan bentuk yang konsisten untuk menciptakan pengalaman pengguna yang menyenangkan.</p>
+
+        <script>
+            // Fungsi untuk mengaktifkan atau menonaktifkan input berdasarkan toggle
+            function toggleInputs() {
+                const toggle = document.getElementById('toggle');
+                const inputs = document.querySelectorAll('#registrationForm input:not(#toggle)');
+                const submitButton = document.querySelector('.btn');
+
+                inputs.forEach(input => {
+                    input.disabled = !toggle.checked;
+                });
+
+                submitButton.disabled = !toggle.checked;
+            }
+
+            // Event listener untuk toggle
+            document.getElementById('toggle').addEventListener('change', toggleInputs);
+
+            // Event listener untuk formulir
+            document.getElementById('registrationForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Mencegah pengiriman formulir default
+
+                // Mengumpulkan data dari formulir
+                const nama = document.getElementById('nama').value;
+                const email = document.getElementById('email').value;
+                const tanggalLahir = document.getElementById('tanggalLahir').value;
+                const gender = document.querySelector('input[name="gender"]:checked')?.value;
+
+                if (!gender) {
+                    alert('Anda harus memilih jenis kelamin.');
+                    return;
+                }
+
+                // Menyimpan data ke localStorage
+                localStorage.setItem('nama', nama);
+                localStorage.setItem('email', email);
+                localStorage.setItem('tanggalLahir', tanggalLahir);
+                localStorage.setItem('gender', gender);
+
+                // Mengalihkan ke halaman baru
+                window.location.href = 'result.html';
+            });
+        </script>
+
+    </div>
+</body>
+</html>
