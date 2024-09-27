@@ -1,0 +1,231 @@
+*,
+html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: Arial, sans-serif;
+}
+
+
+.navbar {
+    background-color: rgb(0, 0, 0);
+    background: linear-gradient(to bottom, rgb(0, 0, 0), rgba(35, 34, 34, 0.465));
+    font-size: 20px;
+    transition: transform 1s ease;
+}
+
+.collapse a {
+    text-align: center;
+    margin-left: 2px;
+    margin-right: 2px;
+    width: 6rem;
+}
+
+.collapse a:hover {
+    border-radius: 5px;
+    outline: 1px solid rgb(255, 255, 255);
+}
+
+/* PICTURE */
+#picture {
+    position: relative;
+    display: inline-block;
+}
+
+#picture .img-fluid {
+    /* margin-top: auto; */
+    background: linear-gradient(to bottom, rgb(255, 85, 24), rgba(194, 81, 40, 0.277));
+    object-fit: cover;
+    z-index: 0;
+}
+
+#picture::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255, 86, 24, 0), rgb(0, 0, 0));
+    z-index: 1;
+    opacity: 1;
+}
+
+
+
+/* HERO */
+#hero {
+    border-top: 1px solid #000000;
+    height: auto;
+    background: linear-gradient(to bottom, rgb(0, 0, 0), rgba(134, 134, 134, 0.229));
+    background-size: cover;
+    padding-bottom: 4rem;
+}
+
+#hero h1 {
+    color: rgba(240, 248, 255, 0.74);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: center;
+    font-size: 6vw;
+    padding-top: 6rem;
+    cursor: pointer;
+    text-shadow: 6px 6px 15px rgba(255, 86, 24, 10);
+}
+
+
+#hero .top3 {
+    margin-top: 4rem;
+}
+
+#hero .card {
+    margin: 0 auto;
+    width: 80%;
+    background-color: rgb(0, 0, 0);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 7);
+    transition: all;
+    transition-duration: 900ms;
+    cursor: pointer;
+
+}
+
+#hero .card:hover {
+    margin: 0 auto;
+    width: 80%;
+    background-color: rgb(0, 0, 0);
+    box-shadow: 0 8px 30px rgba(255, 86, 24, 10);
+}
+
+#hero .card img {
+    transition: all;
+    transition-duration: 900ms;
+    filter: grayscale(100%);
+}
+
+#hero .card img:hover {
+    filter: grayscale(0%);
+}
+
+#hero .card-title {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    color: aliceblue;
+}
+
+#hero .card-text {
+    color: aliceblue;
+}
+
+.btn {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    transition: all;
+    transition-duration: 400ms;
+}
+
+.btn:hover {
+    background-color: rgba(255, 86, 24, 10);
+}
+
+
+/* ABOUT */
+#about {
+    height: auto;
+    padding-top: 17vh;
+    background: linear-gradient(to bottom, rgba(134, 134, 134, 0.229), rgba(134, 134, 134, 0.229));
+}
+
+#about .container {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin: auto;
+    background-color: rgb(0, 0, 0);
+    border-radius: 30px;
+    box-shadow: 0 5px 50px rgba(255, 86, 24, 10);
+}
+
+#about .row {
+    align-items: center;
+    text-align: justify;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#about .col {
+    flex: 1 1 250px;
+    color: rgb(165, 165, 165);
+}
+
+#about .col h3 {
+    color: aliceblue;
+    font-weight: bold;
+}
+
+
+#about img {
+    border-radius: 15px;
+    min-width: 400px;
+    margin-bottom: 1rem;
+}
+
+/* FORM */
+#form {
+    background: linear-gradient(to bottom, rgba(134, 134, 134, 0.229), rgb(105, 105, 105));
+    padding-left: 20vw;
+    padding-right: 20vw;
+    padding-top: 30vh;
+    height: 600px;
+}
+
+#form h1 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: rgb(255, 85, 24);
+}
+
+.form-control {
+    background-color: transparent;
+    border-color: rgb(255, 85, 24);
+    color: rgb(255, 85, 24);
+}
+
+.form-control::placeholder {
+    color: rgb(255, 85, 24);
+}
+
+.form-label {
+    color: rgb(255, 85, 24);
+}
+
+
+/* FOOTER */
+.footer {
+    background-color: #000000;
+    height: auto;
+    padding-left: 0;
+    padding-bottom: 2rem;
+}
+
+.text-center h1 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin-top: 1rem;
+    font-size: 2vw;
+    color: rgb(255, 85, 24);
+    /* background-color: aliceblue; */
+}
+
+.footer .col {
+    display: flex;
+    color: rgb(255, 85, 24);
+    flex-direction: column-reverse;
+    font-size: 1.3vw;
+}
+
+.footer .col a {
+    text-decoration: none;
+    color: rgb(255, 85, 24);
+}
