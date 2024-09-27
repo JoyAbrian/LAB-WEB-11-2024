@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Anime Album</title>
+    <!-- Menghubungkan file css bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Tema asli */
+        .bg-anime-collection {
+            /* Mengatur latar belakang dengan gambar anime */
+            background-image: url('https://example.com/path/to/anime_collection_background.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        .card {
+            position: relative;
+        }
+        .card::before {
+            /* Membuat lapisan gelap di atas kartu untuk meningkatkan keterbacaan teks */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .card-title, .card-text {
+            color: #fff;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+            position: relative;
+            z-index: 2;
+        }
+        body {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Menambahkan bayangan teks ke seluruh body untuk meningkatkan kontras */
+        }
+        /* Variabel tema baru untuk memungkinkan perubahan tema */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --card-bg: #f8f9fa;
+            --card-text: #ffffff;
+            --heading-color: #000000;
+        }
+        .dark-theme { /* variabel untuk tema gelap */
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --card-bg: #1e1e1e;
+            --heading-color: #ffffff;
+        }
+        .red-theme {
+            --bg-color: #ff3333;
+            --text-color: #ffffff;
+            --card-bg: #ff6666;
+            --heading-color: #ffcccc;
+        }
+        .blue-theme {
+            --bg-color: #3333ff;
+            --text-color: #ffffff;
+            --card-bg: #6666ff;
+            --heading-color: #ccccff;
+        }
+
+        /* Aplikasi tema baru */
+        body.theme-active {
+            /* mengaplikasikan warna latar belakang dan teks sesuai tema yang dipilih*/
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        .theme-active .card {
+            background-color: var(--card-bg);
+        }
+        .theme-active h1,
+        .theme-active .lead {
+            color: var(--heading-color);
+        }
+        .theme-active .text-muted {
+            color: var(--text-color) !important;
+            opacity: 0.8;
+        }
+        .theme-switcher .btn {
+            margin: 0 5px;
+        }
+        /* efek interaktif pada teks dan gambar agar saat diarahkan elemen akan sedikit bertambah besar ukurannya */
+        .interactive-text, .card-img-top {
+            transition: transform 0.3s ease; /* menambahkan efek transisi untuk interaksi yang lebih halus*/
+        }
+        .interactive-text:hover, .card-img-top:hover {
+            transform: scale(1.05); /* efek pembesaran saat hover*/
+        }
+        .interactive-text:active, .card-img-top:active {
+            /* efek pengecilan dan getaran saat diklik*/
+            transform: scale(0.95);
+            animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @keyframes shake { /* membuat animasi getaran*/
+            10%, 90% { transform: translate3d(-1px, 0, 0) scale(0.95); }
+            20%, 80% { transform: translate3d(2px, 0, 0) scale(0.95); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0) scale(0.95); }
+            40%, 60% { transform: translate3d(4px, 0, 0) scale(0.95); }
+        }
+        /* Gaya untuk perangkat sentuh */
+        @media (hover: none) {
+            /* menghilangkan efek hover pada perangkat sentuh */
+            .interactive-text:hover, .card-img-top:hover {
+                transform: none;
+            }
+            .interactive-text:active, .card-img-top:active {
+                transform: scale(0.95);
+                animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Bagian header yang dapat dibuka tutup -->
+        <div class="collapse bg-dark" id="navbarHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4 class="text-white">About</h4>
+                        <p class="text-muted">Explore our curated collection of anime series and movies. From classic shows to the latest releases, dive into the colorful world of Japanese animation.</p>
+                    </div>
+                    <div class="col-sm-4 offset-md-1 py-4">
+                        <h4 class="text-white">Contact</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="text-white">Follow on Twitter</a></li>
+                            <li><a href="#" class="text-white">Like on Facebook</a></li>
+                            <li><a href="#" class="text-white">Email us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar Utama -->
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    <strong>Anime Album</strong>
+                </a>
+                <div class="d-flex">
+                    <!-- Dropdown untuk pemilihan tema-->
+                    <div class="dropdown me-3">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="themeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Theme
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="themeDropdown">
+                            <li><a class="dropdown-item" href="#" onclick="setTheme('')">Light</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="setTheme('dark-theme')">Dark</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="setTheme('')">Auto</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="setTheme('red-theme')">Red</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="setTheme('blue-theme')">Blue</a></li>
+                        </ul>
+                    </div>
+                    <!-- Tombol untuk membuka/menutup navbar dan mengatur tampilan layar-->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!-- Bagian utama halaman -->
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <img src="mythical-dragon-beast-anime-style.jpg" alt="Anime Collection" class="img-fluid mb-3 card-img-top">
+                    <h1 class="fw-light interactive-text">Anime Collection</h1>
+                    <p class="lead interactive-text">Selamat Datang Di Album MY Anime.</p>
+                    <p class="lead interactive-text">Kumpulan Anime Yang saya suka dan yang saya anggap menarik.</p>
+                    <p>
+                        <!-- tombol navigasi-->
+                        <a href="#anime-list" class="btn btn-primary my-2 interactive-text">Browse All</a>
+                        <button class="btn btn-secondary my-2 interactive-text" data-bs-toggle="modal" data-bs-target="#genresModal">Genres</button>
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- daftar anime -->
+        <div id="anime-list" class="album py-5">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <!-- Kartu anime pertama -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="peakpx.jpg" class="card-img-top" alt="Latar Anime">
+                            <div class="card-body">
+                                <h5 class="card-title interactive-text">Latar Dalam Anime</h5>
+                                <p class="card-text interactive-text">Latar dalam sebuah anime Fantasy yang menakjubkan.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Rate</button>
+                                    </div>
+                                    <small class="text-muted ms-2">Action, Dark Fantasy</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Kartu anime kedua -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="satoru_gojo_x_kakashi-wallpaper-1152x720.jpg" class="card-img-top" alt="Sang Gojo Dan Kakashi">
+                            <div class="card-body">
+                                <h5 class="card-title interactive-text">Satoru Gojo Dan Kakashi</h5>
+                                <p class="card-text interactive-text">Gojo Satoru eyes blue overpower, Kakashi Hatake sang Ninja Peniru.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Rate</button>
+                                    </div>
+                                    <small class="text-muted">Superhero, Action</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Kartu anime ketiga -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="wallpaperflare.com_wallpaper (1).jpg" class="card-img-top" alt="Film Naruto">
+                            <div class="card-body">
+                                <h5 class="card-title interactive-text">Madara Uchiha</h5>
+                                <p class="card-text interactive-text">Madara Uchiha adalah pendiri klan Uchiha dan musuh legendaris dunia shinobi Yang Memiliki kekuatan Rinnegan dan Sharingan.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Rate</button>
+                                    </div>
+                                    <small class="text-muted ms-2">action adventure fantasy</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Kartu anime keempat -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="wallpaperflare.com_wallpaper (2).jpg" class="card-img-top" alt="Sukuna">
+                            <div class="card-body">
+                                <h5 class="card-title interactive-text">Jujutsu Kaisen</h5>
+                                <p class="card-text interactive-text">Ryomen "Raja Kutukan roh terkutuk yang sangat kuat dan kejam</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Rate</button>
+                                    </div>
+                                    <small class="text-muted ms-2">action, supernatural, adventure, and horror</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Kartu anime kelima -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="wallpaperflare.com_wallpaper (3).jpg" class="card-img-top" alt="Demon Slayer yellow">
+                            <div class="card-body">
+                                <h5 class="card-title interactive-text">Demon Slayer</h5>
+                                <p class="card-text interactive-text">Zenitsu Agatsuma karakter pemburu iblis yang penakut dan sering gugup, tetapi memiliki kekuatan luar biasa saat tertidur.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Rate</button>
+                                    </div>
+                                    <small class="text-muted ms-2"> action, adventure, dark fantasy</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Kartu anime keenam -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="wallpaperflare.com_wallpaper (4).jpg" class="card-img-top" alt="Demon Slayer Green">
+                            <div class="card-body">
+                                <h5 class="card-title interactive-text">Demon Slayer</h5>
+                                <p class="card-text">Tanjiro Kamado tokoh utama dalam demon slayer, haori bercorak kotak-kotak hijau dan hitam ciri khasnya.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Rate</button>
+                                    </div>
+                                    <small class="text-muted">Adventure, Fantasy</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- dialog modal yang muncul saat tombol genre di klik -->
+    <div class="modal fade" id="genresModal" tabindex="-1" aria-labelledby="genresModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="genresModalLabel">Anime Genres</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="#" class="text-decoration-none">Action, Dark Fantasy</a></li>
+                        <li class="list-group-item"><a href="#" class="text-decoration-none">Superhero, Action</a></li>
+                        <li class="list-group-item"><a href="#" class="text-decoration-none">Romance, Supernatural </a></li>
+                        <li class="list-group-item"><a href="#" class="text-decoration-none">Thriller, Supernatural</a></li>
+                        <li class="list-group-item"><a href="#" class="text-decoration-none">Action, Comedy</a></li>
+                        <li class="list-group-item"><a href="#" class="text-decoration-none">Sci-Fi</a></li>
+                        <li class="list-group-item"><a href="#" class="text-decoration-none">Adventure, Fantasy</a></li>
+                        <li class="list-group-item"><a href="#" class="text-decoration-none">Harem</a></li>
+                        <li class="list-group-item"><a href="#" class="text-decoration-none">Isekai</a></li>
+                        <li class="list-group-item"><a href="#" class="text-decoration-none">Mystery</a></li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- berisi tautan untuk menavigasi kembali ke bagian atas halaman, informasi hak cipta, dan tautan navigasi tambahan-->
+    <footer class="text-muted py-5">
+        <div class="container">
+            <p class="float-end mb-1">
+                <a href="#" class="interactive-text">Back to top</a>
+            </p>
+            <p class="mb-1 interactive-text">Anime Album is &copy; YourCompany, but please download and customize it for yourself!</p>
+            <p class="mb-0 interactive-text">New to anime? <a href="/">Visit our homepage</a> or read our <a href="#">getting started guide</a>.</p>
+        </div>
+    </footer>
+    <div class="theme-switcher">
+        
+    </div>
+    <!-- mengaktifkan komponen javascript bootstrap, seperti navbar yang diciutkan, menu tarik turun, fungsionalitas modal-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+            /* bertanggung jawab untuk mengubah tema situs web*/
+        function setTheme(themeName) {
+            document.body.className = themeName ? 'theme-active ' + themeName : '';
+        }
+    </script>
+</body>
+</html>
