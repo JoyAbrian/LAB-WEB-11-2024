@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permainan Tebak Angka</title>
+</head>
+<body>
+    <script>
+        const angkaAcak = Math.floor(Math.random() * 100) + 1; // Menghasilkan angka acak antara 1 dan 100
+        let jumlahTebakan = 0;
+
+        while (true) {
+            let inputTebakan = parseInt(prompt("Masukkan salah satu dari angka 1 sampai 100:"));
+
+
+            if (isNaN(inputTebakan) || inputTebakan < 1 || inputTebakan > 100) {
+                alert("Input tidak valid! Harap masukkan angka antara 1 hingga 100.");
+                continue; 
+            }
+            
+            jumlahTebakan++;
+
+            if (inputTebakan < angkaAcak) {
+                alert("Terlalu rendah! Coba lagi.");
+            } else if (inputTebakan > angkaAcak) {
+                alert("Terlalu tinggi! Coba lagi.");
+            } else {
+                alert("Selamat! kamu berhasil menebak angka " + angkaAcak + " dengan benar. Sebanyak " + jumlahTebakan + " percobaan.");
+                break; 
+            }
+        }
+    </script>
+</body>
+</html>
