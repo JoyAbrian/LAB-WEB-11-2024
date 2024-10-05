@@ -1,0 +1,10 @@
+.bg-image {
+    background-image: url(assest/img2.jpg);
+    background-size: cover;
+    background-position: center; 
+    height: 100vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
