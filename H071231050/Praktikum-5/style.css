@@ -1,0 +1,96 @@
+body {
+    color: #ecf0f1;
+    background-image: url("assets/mejaPoker.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 600px;
+}
+
+.container {
+    height: 600px;
+}
+
+.card {
+    width: 80px;
+    height: 130px;
+    background-color: #fff;
+    color: #000;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.card.closed {
+    background-image: url('assets/back.png');
+    background-size: cover;
+    background-position: center;
+    height: 130px;
+    width: 80px;
+    display: inline-flex;
+    color: transparent;
+}
+
+.red-suit {
+    color: red;
+}
+
+.black-suit {
+    color: black;
+}
+
+#game-over {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background-color: aqua; */
+}
+
+.kotak {
+    display: flex;
+    justify-content: center;
+    height: 130px;
+    margin-bottom: 1rem;
+}
+
+.col-md-6 {
+    /* display: flex; */
+    align-items: center;
+}
+
+.judi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#pemain {
+    background-color: #000;
+    margin: auto;
+    background-image: url("assets/bet.jpg");
+    height: 180px;
+    padding-top: 2rem;
+    border-radius: 10px;
+    /* width: 1600px; */
+    /* margin-left: 0;  */
+}
+
+.duit {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
