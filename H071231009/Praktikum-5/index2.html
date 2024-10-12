@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        *{
+            margin: 0;
+        }
+        body {
+            background-image: url(bg.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            /* min-width: 600px; */
+        }
+
+        .bagianAtas {
+            margin: 20px;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        button{
+            border-radius: 10px;
+            padding: 16px;
+            border: none;
+            color: white;
+            box-shadow: 0 10px 20px rgb(253, 253, 253);
+        }
+
+        .start button{
+            background-color: rgb(33, 157, 33);  
+        }
+
+        .take button {
+            background-color: maroon;
+        }
+
+        .hold button{
+            background-color: maroon;  
+        }
+
+        button:hover {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .botimg img, 
+        .myimg img{
+            width: 120px;
+            margin: 1px;
+            /* height: 100px; */
+        }
+
+        .bagianTengah {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            gap: 10px;
+        }
+
+        .samping {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px;
+            border-radius: 20px;
+        }
+
+        .sampingKiri, 
+        .sampingKanan {
+            display: flex;
+            flex-direction: column;
+            width: 10em;
+            height: 16em;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgb(253, 253, 253);
+            gap: 10px;
+        }
+
+        .sampingKiri {
+            background-color: rgb(161, 101, 152);
+        }
+        .sampingKanan {
+            background-color: rgb(112, 38, 96);
+        }
+
+        .depo input {
+            background-color: rgb(161, 101, 152);
+            color: white;
+            width: 90px;
+            padding: 5px;
+            border: none;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="bagianAtas">
+        <div class="start">
+            <button type="submit" id="btn-start">Start Game</button>
+        </div>
+
+        <div class="take">
+            <button type="submit" id="btn-take">Take A Card</button>
+        </div>
+
+        <div class="hold">
+            <button type="submit" id="btn-hold">Hold Card</button>
+        </div>
+    </div>
+
+    <div class="bagianTengah">
+        <h1>BLACKJACK KANG</h1>
+        <h4>Play a Round?</h4>
+        <div class="cards" style="margin-top: 10px; text-align: center;">
+            <div class="cardBot" id="cardBot">
+                <h3>Bot Card</h3>
+                <div class="botimg" id="botimg" style="margin-top: 5px;">
+                    <img src="./cards/BACK.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="samping">
+        <div class="sampingKiri" style="text-align: center; display: flex; flex-direction: column;">
+            <h5>Bot Sums</h5>
+            <label for="" id="bot">0</label>
+        </div>
+
+        <div class="cardYour" id="cardYour" style="text-align: center; color: white; ">
+            <h3>Your Card</h3>
+            <div class="myimg" id="myimg" style="margin-top: 5px;">
+                <img src="./cards/BACK.png" alt="">
+            </div>
+        </div>
+
+        
+        <div class="sampingKanan">
+            <div class="sum">
+                <label for="">My Sums : <span id="mysum">0</span></label>
+            </div>
+
+            <div class="uang">
+                <label for="">My Money : Rp. <span id="amount">5000</span></label>
+            </div>
+
+            <div class="depo">
+                <label for="">Depo : </label>
+                <input type="number" class="depo" id="depo" min="0" step="100">
+            </div>
+
+        </div>
+    </div>
+
+    <!-- pop -->
+    <div class="notif" id="notif-container" style="display: none;">
+        <h1 id="notif"></h1>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
