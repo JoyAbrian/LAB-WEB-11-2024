@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <!-- Kode ini mengatur encoding ke UTF-8, membuat halaman responsif dengan judul "Black Jack - Card Games", dan mengimpor Tailwind CSS
+    Animate.css, serta font "Poppins" untuk desain halaman web Blackjack. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackJack - Card Games</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        /* `@keyframes cardFlip` mendefinisikan animasi untuk membalik kartu dari 0° hingga 180° pada sumbu Y
+            menghasilkan efek kartu terbalik. */
+        @keyframes cardFlip {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(180deg); }
+        }
+        /* Kode `body` tersebut mengatur font keluarga "Poppins" dan memberi latar belakang berupa gradien linear dengan sudut 135 derajat
+            dimulai dari warna gelap (#1a1e2e) ke warna lebih terang (#2d3748). */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1e2e 0%, #2d3748 100%);
+        }
+
+        @keyframes color-change {
+            0% { color: #ff0080; }
+            20% { color: #ff8c00; }
+            40% { color: #fffc00; }
+            60% { color: #00ff4f; }
+            80% { color: #00bfff; }
+            100% { color: #ff00f7; }
+        }
+
+        .animated-title {
+            font-size: 3rem; /* Ukuran lebih kecil */
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff0080, #ff8c00, #fffc00, #00ff4f, #00bfff, #ff00f7);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: color-change 5s linear infinite;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* Memberikan efek bayangan */
+            letter-spacing: 0.05em; /* Sedikit menambah jarak antar huruf */
+            margin-top: -20px; /* Menaikkan judul sedikit */
+            margin-bottom: 20px; /* Memberikan sedikit spasi di bawah judul */
+        }
+
+        .judul-saldo, .judul-taruhan, .saldo, .taruhan {
+    background: linear-gradient(90deg, #ff0080, #ff8c00, #fffc00, #00ff4f, #00bfff, #ff00f7);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow 5s linear infinite;
+        }
+            /*k*/
+
+        @keyframes rainbow-text {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* `@keyframes rainbow` membuat animasi latar bergerak dari kiri (0%) ke kanan (100%) untuk efek gradien berpindah. */
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        /* rainbow-text` menerapkan gradien warna, memotong latar ke teks, dan membuat efek teks berwarna bergerak dengan animasi 
+        `rainbow` yang berulang setiap 5 detik.*/
+        .rainbow-text {
+            background: linear-gradient(90deg, #ff0080, #ff8c00, #fffc00, #00ff4f, #00bfff, #ff00f7);
+                background-size: 300%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: rainbow 5s linear infinite;
+        }
+
+        /*Kelas `.card` mengatur perspektif 3D, sedangkan `.card-inner` mengizinkan rotasi 3D. Kartu berputar 180 derajat saat kelas 
+        flipped` ditambahkan.*/
+        .card {
+            perspective: 1000px;
+            transition: transform 0.5s;
+        }
+
+        /* mengatur elemen kartu dengan posisi relatif, lebar dan tinggi 100%, teks terpusat
+        serta animasi rotasi 3D yang halus selama 0,8 detik dengan menggunakan efek transformasi 3D.*/
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+
+        /*menerapkan rotasi 180 derajat pada sumbu Y saat elemen kartu memiliki kelas "flipped"
+        sehingga membuat tampilan kartu terlihat terbalik.*/
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        /*Mengatur tampilan depan dan belakang kartu dengan posisi absolut, ukuran penuh, menyembunyikan sisi tak terlihat, 
+        teks di tengah, sudut membulat, dan bayangan untuk tampilan realistis. */
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* mengatur tampilan depan kartu dengan latar belakang gradien diagonal biru tua (#2c5282) ke biru cerah (#2b6cb0)
+        teks berwarna putih, serta garis tepi (border) berwarna biru muda (#63b3ed) dengan ketebalan 2px.*/
+        .card-front {
+            background: linear-gradient(145deg, #2c5282, #2b6cb0);
+            color: white;
+            border: 2px solid #63b3ed;
+        }
+
+        /* Tampilan belakang kartu berwarna putih dengan teks biru, diputar 180 derajat pada sumbu Y, dan memiliki border biru muda.*/
+        .card-back {
+            background: white;
+            color: #2c5282;
+            transform: rotateY(180deg);
+            border: 2px solid #63b3ed;
+        }
+
+        /* mengatur tampilan elemen berbentuk lingkaran (60x60 px), dengan teks tebal di tengah, sudut membulat
+        dan efek bayangan lembut. Elemen ini interaktif dengan efek transisi saat diklik, serta memiliki border tipis transparan.*/
+        .chip {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* menambahkan efek saat elemen di-hover. Elemen akan sedikit terangkat dengan `transform: translateY(-5px)` 
+        dan memiliki bayangan yang lebih dalam untuk memberikan efek interaksi yang lebih dinamis. */
+        .chip:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* mengatur elemen agar memenuhi layar (dengan `position: fixed` dan lebar serta tinggi 100%), tidak bisa diklik 
+        (`pointer-events: none`), dan berada di atas semua elemen lainnya dengan `z-index: 9999`.*/
+        #confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /*`#confetti` mengisi seluruh layar, tidak bisa diklik, dan berada di lapisan paling atas.
+        menggerakkan elemen dari atas ke bawah sambil berputar 720 derajat. */
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(720deg); }
+        }
+
+        /*`.animate-confetti` membuat elemen jatuh dengan animasi linear selama 5 detik. */
+        .animate-confetti {
+            position: absolute;
+            animation: confettiFall 5s linear forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen"> <!-- membuat latar belakang abu-abu gelap, teks putih, dan tinggi minimum sesuai layar.-->
+    <div id="confetti"></div> <!-- elemen kosong untuk menampilkan animasi jatuh di layar-->
+    
+    <!--Mengatur layout agar konten berada di tengah dengan margin otomatis dan padding untuk estetika, 
+    Memuat judul utama "BLACKJACK" yang diberi efek animasi, dan berfuungsi menampilkan dan mengatur saldo dalam permainan Blackjack. -->
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="animated-title">BLACKJACK</h1>
+            <div class="flex justify-center space-x-4">
+                <div class="bg-blue-800 rounded-lg p-4">
+                    <h3 class="judul-saldo text-xl font-bold">Saldo</h3>
+                    <p class="text-2xl font-bold">$<span id="balance">5000</span></p>
+                
+                    <input type="number" id="initial-balance" class="bg-white text-black rounded px-2 py-1 mt-2" placeholder="Masukkan Saldo">
+                    <button onclick="setInitialBalance()" class="bg-green-500 text-white px-4 py-2 rounded mt-2">Set Saldo</button>
+                </div>
+                
+                <!--Ditampilkan dengan gaya tebal, Menampilkan $0, Pengguna dapat memasukkan jumlah taruhan, 
+                Menjalankan fungsi placeCustomBet() untuk menetapkan jumlah taruhan. -->
+                <div class="bg-blue-800 rounded-lg p-4">
+                    <h3 class="judul-taruhan text-xl font-bold">Taruhan</h3>
+                    <p class="text-2xl font-bold">$<span id="current-bet">0</span></p>
+                
+                    <input type="number" id="custom-bet" class="bg-white text-black rounded px-2 py-1 mt-2" placeholder="Masukkan Taruhan">
+                    <button onclick="placeCustomBet()" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">Taruh</button>
+                </div>
+            </div>
+        </header>
+
+        <!--Menggunakan kelas flex untuk menampilkan chips taruhan secara horizontal, Empat jenis chip taruhan dengan nilai yang berbeda
+        Setiap chip memiliki atribut data-value yang menyimpan nilai nominalnya. -->
+        <div class="flex justify-center mb-8 space-x-4" id="chips">
+            <div class="chip bg-red-500" data-value="100">$100</div>
+            <div class="chip bg-blue-500" data-value="500">$500</div>
+            <div class="chip bg-green-500" data-value="1000">$1K</div>
+            <div class="chip bg-purple-500" data-value="5000">$5K</div>
+        </div>
+
+        <!--Menampilkan kartu dealer dengan latar belakang gradien biru dan sudut melengkung, Judul "Dealer" bergaya khusus, 
+        kartu ditampilkan di `dealer-hand` dengan tata letak fleksibel, dan total nilai di `dealer-total` dimulai dari 0 dalam format tebal. -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <div class="bg-gradient-to-br from-blue-900 to-blue-800 rounded-xl p-6 shadow-lg">
+                <h2 class="text-2xl mb-4 font-semibold rainbow-text">Dealer</h2>
+                <div id="dealer-hand" class="flex flex-wrap justify-center gap-4 min-h-[200px]"></div>
+                <p class="mt-4 text-xl">Total: <span id="dealer-total" class="font-bold rainbow-text">0</span></p>
+            </div>
+            
+            <!--Menampilkan kartu pemain dengan latar belakang gradien biru dan sudut melengkung, Judul "Player" bergaya khusus
+            kartu ditampilkan di `player-hand` dengan tata letak fleksibel, dan total nilai di `player-total` dimulai dari 0 dalam format tebal. -->
+            <div class="bg-gradient-to-br from-blue-900 to-blue-800 rounded-xl p-6 shadow-lg">
+                <h2 class="text-2xl mb-4 font-semibold rainbow-text">Player</h2>
+                <div id="player-hand" class="flex flex-wrap justify-center gap-4 min-h-[200px]"></div>
+                <p class="mt-4 text-xl">Total: <span id="player-total" class="font-bold rainbow-text">0</span></p>
+            </div>
+        </div>
+        
+        <!--Menyediakan tombol aksi permainan Blackjack: "Deal", "Hit", "Stand", dan "Double Down" dengan gaya warna dan efek hover
+        serta menonaktifkan tombol "Hit", "Stand", dan "Double Down" secara default. -->
+        <div class="flex justify-center space-x-4 mb-8">
+            <button id="deal-button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                Deal
+            </button>
+            <button id="hit-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" disabled>
+                Hit
+            </button>
+            <button id="stand-button" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded" disabled>
+                Stand
+            </button>
+            <button id="double-button" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded" disabled>
+                Double Down
+            </button>
+        </div>
+
+        <div id="message" class="text-center text-2xl mb-8"></div> <!--Menampilkan elemen dengan ID "message" untuk pesan permainan -->
+
+        <!--Menampilkan statistik permainan dalam elemen dengan latar belakang biru, termasuk jumlah permainan
+        kemenangan, kekalahan, dan seri, masing-masing dengan ID untuk pembaruan dinamis. -->
+        <div class="bg-blue-800 rounded-xl p-6 shadow-lg">
+            <h2 class="text-xl mb-4 rainbow-text">Statistik</h2>
+            <div class="space-y-2">
+                <p class="flex justify-between">
+                    <span class="text-blue-200">Games Played:</span>
+                    <span id="games-played" class="font-bold">0</span>
+                </p>
+                <p class="flex justify-between">
+                    <span class="text-green-200">Wins:</span>
+                    <span id="games-won" class="font-bold">0</span>
+                </p>
+                <p class="flex justify-between">
+                    <span class="text-red-200">Losses:</span>
+                    <span id="games-lost" class="font-bold">0</span>
+                </p>
+                <p class="flex justify-between">
+                    <span class="text-yellow-200">Ties:</span>
+                    <span id="games-tied" class="font-bold">0</span>
+                </p>
+            </div>
+        </div>
+        
+            <!--Menampilkan elemen dengan gradien biru untuk riwayat permainan, termasuk judul "History" 
+            dan div untuk menampilkan riwayat dengan scrollbar vertikal.-->
+            <div class="bg-gradient-to-br from-blue-900 to-blue-800 rounded-xl p-6 shadow-lg">
+                <h2 class="text-xl mb-4 font-semibold text-white rainbow-text">History</h2>
+                <div id="historyDiv" class="h-40 overflow-y-auto space-y-2 text-blue-200"></div>
+            </div>
+
+            <!--Menampilkan panel strategi dengan latar belakang biru, berisi judul "Strategi" 
+            dan tiga poin penting tentang aturan permainan dalam ukuran teks kecil. -->
+            <div class="bg-blue-800 rounded-lg p-6">
+                <h2 class="text-xl mb-4 rainbow-text">Strategi</h2>
+                <p class="text-sm rainbow-text">• Dealer harus hit pada 16 dan stand pada 17</p>
+                <p class="text-sm rainbow-text">• Blackjack membayar 3:2</p>
+                <p class="text-sm rainbow-text">• Double down tersedia pada 9, 10, atau 11</p>
+            </div>
+    
+    <!--Menampilkan modal "Game Over" dengan latar belakang hitam transparan, yang berisi pesan saldo habis
+    dan tombol untuk memulai permainan baru dengan saldo awal $5000.-->      
+    <div id="game-over" class="fixed inset-0 bg-black bg-opacity-75 hidden flex items-center justify-center">
+        <div class="bg-blue-800 rounded-lg p-8 text-center">
+            <h2 class="text-3xl mb-4">Game Over</h2>
+            <p class="mb-4">Saldo Anda telah habis!</p>
+            <button onclick="resetGame()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                Main Lagi ($5000)
+            </button>
+        </div>
+
+        <audio id="cardSound" src="felong-is-ready-made-with-Voicemod.mp3"></audio>
+        <audio id="winSound" src="ml-victory-sound-effect-made-with-Voicemod.mp3"></audio>
+        <audio id="loseSound" src="yokoso,-warena-no-shiro-las-noches-made-with-Voicemod.mp3"></audio>
+
+    </div>
+
+    <script>
+
+/*Fungsi `playSound` memutar suara berdasarkan ID elemen. Jika ditemukan, suara direset ke awal dan diputar
+Jika tidak ditemukan atau ada kesalahan, pesan kesalahan dicetak ke konsol. */
+function playSound(soundId) {
+        const sound = document.getElementById(soundId);
+        if (sound) {
+            sound.currentTime = 0;  // Reset sound to start
+            sound.play().catch(e => console.error("Error playing sound:", e));
+        } else {
+            console.error("Sound element not found:", soundId);
+        }
+    }
+
+/* Menggunakan calculateHandTotal untuk mendapatkan total nilai kartu pemain (playerTotal) dan dealer (dealerTotal), 
+Melakukan Evaluasi Hasil: Jika playerTotal lebih dari 21, pemain dianggap kalah (bust), Jika dealerTotal lebih dari 21, dealer kalah (bust),
+Jika playerTotal lebih besar dari dealerTotal, pemain menang, Jika dealerTotal lebih besar, dealer menang,
+Jika kedua total sama, hasilnya seri (push). dan menampilkan hasil melalui konsol. */
+function checkGameResult() {
+    const playerTotal = calculateHandTotal(playerHand);
+    const dealerTotal = calculateHandTotal(dealerHand);
+    
+    if (playerTotal > 21) {
+        console.log("Player bust! Dealer wins.");
+    } else if (dealerTotal > 21) {
+        console.log("Dealer bust! Player wins.");
+    } else if (playerTotal > dealerTotal) {
+        console.log("Player wins with total: " + playerTotal);
+    } else if (dealerTotal > playerTotal) {
+        console.log("Dealer wins with total: " + dealerTotal);
+    } else {
+        console.log("It's a push! Both have total: " + playerTotal);
+    }
+
+    // Tambahan: Update tampilan UI atau saldo jika diperlukan
+    updateUIAfterGame(playerTotal, dealerTotal);
+}
+
+/* Fungsi updateUIAfterGame digunakan untuk menampilkan hasil permainan di layar, Pemain kalah jika total kartu lebih dari 21 (bust), 
+Dealer kalah jika total kartu dealer lebih dari 21 (bust), Pemain menang jika total kartu pemain lebih besar dari dealer, Dealer menang 
+jika total kartu dealer lebih besar dari pemain, Seri terjadi jika total kartu pemain dan dealer sama,
+Pesan hasil ditampilkan di elemen dengan ID "message".*/
+function updateUIAfterGame(playerTotal, dealerTotal) {
+    const messageElement = document.getElementById("message");
+    if (playerTotal > 21) {
+        messageElement.textContent = "Player bust! Dealer wins.";
+    } else if (dealerTotal > 21) {
+        messageElement.textContent = "Dealer bust! Player wins.";
+    } else if (playerTotal > dealerTotal) {
+        messageElement.textContent = "Player wins with total: " + playerTotal;
+    } else if (dealerTotal > playerTotal) {
+        messageElement.textContent = "Dealer wins with total: " + dealerTotal;
+    } else {
+        messageElement.textContent = "It's a push! Both have total: " + playerTotal;
+    }
+
+    // Reset tombol dan status permainan jika diperlukan
+    resetGameStatus();
+}
+
+/* untuk mereset status permainan dan antarmuka pengguna (UI) setelah permainan berakhir.*/
+function resetGameStatus() {
+    /* Meng-disable tombol "Hit", "Stand", dan "Double Down" untuk mencegah tindakan lebih lanjut.
+Meng-enable tombol "Deal" agar pemain dapat memulai permainan baru */
+    document.getElementById("hit-button").disabled = true;
+    document.getElementById("stand-button").disabled = true;
+    document.getElementById("double-button").disabled = true;
+    document.getElementById("deal-button").disabled = false;
+}
+
+/* Mengatur saldo awal permainan dengan langkah-langkah berikut: Mengambil dan mengonversi nilai dari elemen `initial-balance` menjadi integer,
+Memeriksa apakah nilai lebih dari 0 Jika valid, menetapkan saldo pemain (`game.playerMoney`) dan memperbarui tampilan dengan `updateDisplay()` 
+Jika tidak valid, menampilkan pesan kesalahan di `messageElement`.*/
+function setInitialBalance() {
+    const initialBalance = parseInt(document.getElementById('initial-balance').value);
+    if (initialBalance > 0) {
+        game.playerMoney = initialBalance;
+                updateDisplay();
+            } else {
+                messageElement.textContent = 'Masukkan saldo awal yang valid.';
+            }
+        }
+
+/* Mengambil nilai dari elemen dengan ID custom-bet dan mengonversinya menjadi integer menggunakan parseInt, Memeriksa apakah customBet adalah
+ angka yang valid (minimal 100) dan apakah taruhan dapat ditempatkan melalui fungsi game.placeBet(customBet), 
+ memastikan bahwa pengguna hanya dapat membuat taruhan yang memenuhi syarat dan saldo cukup.*/
+function placeCustomBet() {
+    const customBet = parseInt(document.getElementById('custom-bet').value);
+    if (customBet >= 100 && game.placeBet(customBet)) {
+    updateDisplay();
+    disableBetting();
+        } else {
+            messageElement.textContent = 'Taruhan tidak valid atau saldo tidak cukup.';
+            }
+        }
+
+/*Mengambil elemen confetti, Membuat loop 100 kali untuk: Buat elemen <div>, mambahkan kelas animate-confetti, Mengatur posisi horizontal, 
+    durasi animasi (2-5 detik), warna , dan ukuran (5-15px) secara acak, Menambahkan potongan ke confetti, 
+    Mengosongkan elemen confetti setelah 5 detik. */
+function createConfetti() {
+    const confetti = document.getElementById('confetti');
+    for (let i = 0; i < 100; i++) {
+        const confettiPiece = document.createElement('div');
+        confettiPiece.classList.add('animate-confetti');
+        confettiPiece.style.left = `${Math.random() * 100}vw`;
+        confettiPiece.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        confettiPiece.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        confettiPiece.style.width = `${Math.random() * 10 + 5}px`;
+        confettiPiece.style.height = `${Math.random() * 10 + 5}px`;
+        confetti.appendChild(confettiPiece);
+    }
+    setTimeout(() => {
+        confetti.innerHTML = '';
+    }, 5000);
+}
+
+class Card {
+    constructor(suit, value) {
+        this.suit = suit; // Menyimpan jenis kartu (suit)
+        this.value = value; // Menyimpan nilai kartu
+    }
+
+    toString() {
+        // Mengembalikan representasi string dari kartu dengan warna sesuai suit
+        const color = this.suit === 'Hearts' || this.suit === 'Diamonds' ? 'text-red-600' : 'text-black';
+        return `<span class="${color}">${this.value}${this.getSuitSymbol()}</span>`;
+    }
+
+    getSuitSymbol() {
+        // Mengembalikan simbol untuk jenis kartu
+        const symbols = {
+            'Hearts': '♥',
+            'Diamonds': '♦',
+            'Clubs': '♣',
+            'Spades': '♠'
+        };
+        return symbols[this.suit];
+    }
+
+    getCardValue() {
+        // Mengembalikan nilai numerik dari kartu
+        if (['J', 'Q', 'K'].includes(this.value)) {
+            return 10; // Nilai face cards
+        } else if (this.value === 'A') {
+            return 11; // Nilai Ace
+        } else {
+            return parseInt(this.value); // Mengembalikan nilai numerik untuk kartu biasa
+        }
+    }
+}
+
+
+class Deck {
+    constructor(numDecks = 6) {
+        this.numDecks = numDecks; // Menyimpan jumlah dek yang digunakan
+        this.cards = []; // Menyimpan array kartu
+        this.initDeck(); // Memanggil fungsi untuk menginisialisasi dek
+        this.shuffle(); // Mengocok kartu setelah dek diinisialisasi
+    }
+
+    initDeck() {
+        // Menginisialisasi dek kartu
+        const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
+        const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+
+        for (let d = 0; d < this.numDecks; d++) {
+            for (let suit of suits) {
+                for (let value of values) {
+                    this.cards.push(new Card(suit, value)); // Menambahkan kartu ke dalam dek
+                }
+            }
+        }
+    }
+
+    shuffle() {
+        // Mengocok kartu dalam dek secara acak
+        for (let i = this.cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]]; // Tukar posisi kartu
+        }
+    }
+
+    deal() {
+        // Mengambil kartu paling atas dari dek
+        return this.cards.pop();
+    }
+
+    cardsRemaining() {
+        // Mengembalikan jumlah kartu yang tersisa dalam dek
+        return this.cards.length;
+    }
+}
+
+class Game {
+    constructor() {
+        this.deck = new Deck(6); // Menggunakan 6 dek kartu
+        this.playerHand = []; // Menyimpan tangan pemain
+        this.dealerHand = []; // Menyimpan tangan dealer
+        this.playerMoney = 5000; // Menyimpan saldo uang pemain
+        this.currentBet = 0; // Menyimpan jumlah taruhan saat ini
+        this.gamesPlayed = 0; // Menyimpan jumlah permainan yang telah dimainkan
+        this.gamesWon = 0; // Menyimpan jumlah permainan yang dimenangkan
+        this.gamesLost = 0; // Menyimpan jumlah permainan yang kalah
+        this.gamesTied = 0; // Menyimpan jumlah permainan yang seri
+        this.gameOver = false; // Status permainan
+        this.reshuffleThreshold = 52; // Ambang untuk mengocok ulang dek
+    }
+
+    placeBet(amount) {
+        // Menempatkan taruhan
+        if (amount < 100) {
+            messageElement.textContent = 'Taruhan minimal adalah $100.'; // Pesan jika taruhan terlalu rendah
+            return false;
+        }
+        if (this.playerMoney >= amount) {
+            this.currentBet = amount; // Mengatur taruhan saat ini
+            this.playerMoney -= amount; // Mengurangi saldo uang pemain
+            return true; // Berhasil menempatkan taruhan
+        }
+        return false; // Gagal menempatkan taruhan
+    }
+
+    deal() {
+        // Menangani distribusi kartu
+        if (this.deck.cardsRemaining() < this.reshuffleThreshold) {
+            this.deck = new Deck(6); // Mengganti dek baru jika kurang dari ambang batas
+            messageElement.textContent = 'Deck telah dikocok ulang.'; // Pesan untuk memberitahukan pengocokan ulang
+        }
+        this.playerHand = [this.deck.deal(), this.deck.deal()]; // Memberikan dua kartu ke pemain
+        this.dealerHand = [this.deck.deal(), this.deck.deal()]; // Memberikan dua kartu ke dealer
+    }
+
+    hit(hand) {
+        // Mengambil kartu tambahan untuk tangan
+        hand.push(this.deck.deal()); // Menambahkan kartu baru ke tangan
+        return this.calculateHand(hand) <= 21; // Mengembalikan true jika total tidak lebih dari 21
+    }
+
+    dealerPlay() {
+        // Mengatur giliran dealer
+        while (this.calculateHand(this.dealerHand) < 17) {
+            this.hit(this.dealerHand); // Dealer menarik kartu hingga total mencapai minimal 17
+        }
+    }
+
+    determineWinner() {
+        // Menentukan pemenang permainan
+        let playerTotal = this.calculateHand(this.playerHand); // Menghitung total tangan pemain
+        let dealerTotal = this.calculateHand(this.dealerHand); // Menghitung total tangan dealer
+
+        if (playerTotal > 21) {
+            return 'dealer'; // Pemain kalah jika total lebih dari 21
+        } else if (dealerTotal > 21) {
+            return 'player'; // Dealer kalah jika total lebih dari 21
+        } else if (playerTotal > dealerTotal) {
+            return 'player'; // Pemain menang jika total lebih tinggi
+        } else if (dealerTotal > playerTotal) {
+            return 'dealer'; // Dealer menang jika total lebih tinggi
+        } else {
+            return 'tie'; // Seri jika total sama
+        }
+    }
+
+    endRound() {
+        // Mengakhiri ronde dan menentukan hasilnya
+        let result = this.determineWinner(); // Menentukan pemenang
+        this.gamesPlayed += 1; // Menambah jumlah permainan yang dimainkan
+        switch (result) {
+            case 'player':
+                messageElement.textContent = 'Anda menang!'; // Pesan kemenangan pemain
+                this.playerMoney += this.currentBet * 2; // Menambah saldo pemain
+                this.gamesWon += 1; // Menambah jumlah kemenangan
+                addToHistory('Player won the game.'); // Menambahkan riwayat
+                break;
+            case 'dealer':
+                messageElement.textContent = 'Dealer menang!'; // Pesan kemenangan dealer
+                this.gamesLost += 1; // Menambah jumlah kekalahan
+                addToHistory('Dealer won the game.'); // Menambahkan riwayat
+                break;
+            case 'tie':
+                messageElement.textContent = 'Seri!'; // Pesan seri
+                this.playerMoney += this.currentBet; // Mengembalikan taruhan ke pemain
+                this.gamesTied += 1; // Menambah jumlah seri
+                addToHistory('It\'s a tie.'); // Menambahkan riwayat
+                break;
+        }
+
+        this.gameOver = true; // Menandai permainan berakhir
+        updateDisplay(); // Memperbarui tampilan
+        enableBetting(); // Mengaktifkan kembali taruhan
+
+        if (this.playerMoney <= 0) {
+            document.getElementById('game-over').classList.remove('hidden'); // Menampilkan pesan game over
+            messageElement.textContent = 'Game Over! Saldo Anda habis.'; // Pesan saldo habis
+        }
+    }
+
+    calculateHand(hand) { 
+        // Menghitung nilai total tangan
+        let total = 0;
+        let aceCount = 0;
+
+        for (let card of hand) {
+            total += card.getCardValue(); // Menjumlahkan nilai kartu
+            if (card.value === 'A') {
+                aceCount += 1; // Menghitung jumlah Ace
+            }
+        }
+
+        while (total > 21 && aceCount > 0) {
+            total -= 10; // Menghitung Ace sebagai 1 jika total lebih dari 21
+            aceCount -= 1;
+        }
+
+        return total; // Mengembalikan total akhir
+    }
+}
+
+// Fungsi untuk menghitung nilai kartu
+function hitungNilaiKartu(kartu) {
+    let total = 0; // Variabel untuk menyimpan total nilai
+    let adaAs = false; // Flag untuk mengecek apakah ada Ace
+
+    kartu.forEach(k => {
+        if (k === 'A') {
+            total += 11; // Menghitung Ace sebagai 11
+            adaAs = true; // Menandai ada Ace
+        } else if (['K', 'Q', 'J'].includes(k)) {
+            total += 10; // Face cards dihitung sebagai 10
+        } else {
+            total += parseInt(k); // Menghitung kartu numerik
+        }
+    });
+
+    // Jika total lebih dari 21 dan ada Ace, kurangi 10 dari total
+    if (total > 21 && adaAs) {
+        total -= 10;
+    }
+
+    return total; // Mengembalikan total akhir
+}
+
+// Fungsi untuk giliran bandar
+function giliranBandar(kartuBandar) {
+    let nilaiBandar = hitungNilaiKartu(kartuBandar);
+
+    // Bandar akan terus "hit" hingga total mencapai minimal 17
+    while (nilaiBandar < 17) {
+        let kartuBaru = ambilKartu();
+        kartuBandar.push(kartuBaru);
+        nilaiBandar = hitungNilaiKartu(kartuBandar);
+    }
+
+    return nilaiBandar;
+}
+
+// Fungsi contoh untuk mengambil kartu (acak)
+function ambilKartu() {
+    const deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A']; // Dek kartu
+    return deck[Math.floor(Math.random() * deck.length)]; // Mengembalikan kartu acak dari dek
+}
+
+// Contoh penggunaan
+let kartuBandar = ['A', 6]; // Contoh tangan bandar dengan Ace dan 6
+let hasilAkhir = giliranBandar(kartuBandar); // Menghitung nilai akhir bandar
+console.log("Kartu Bandar: ", kartuBandar); // Menampilkan kartu bandar
+console.log("Nilai akhir bandar: ", hasilAkhir); // Menampilkan nilai akhir bandar
+
+
+// Fungsi untuk memperbarui tampilan jumlah kartu yang tersisa
+function updateDeckCount() {
+    const deckCountElement = document.getElementById('deck-count'); // Mengambil elemen untuk menampilkan jumlah kartu
+    if (deckCountElement) {
+        deckCountElement.textContent = game.deck.cardsRemaining(); // Memperbarui jumlah kartu yang tersisa
+    }
+}
+    let game = new Game(); // Membuat instance permainan
+    let messageElement = document.getElementById('message'); // Elemen untuk menampilkan pesan
+    let balanceElement = document.getElementById('balance'); // Elemen untuk menampilkan saldo
+    let betElement = document.getElementById('current-bet'); // Elemen untuk menampilkan taruhan saat ini
+    let playerTotalElement = document.getElementById('player-total'); // Elemen untuk menampilkan total pemain
+    let dealerTotalElement = document.getElementById('dealer-total'); // Elemen untuk menampilkan total bandar
+    let playerHandElement = document.getElementById('player-hand'); // Elemen untuk menampilkan tangan pemain
+    let dealerHandElement = document.getElementById('dealer-hand'); // Elemen untuk menampilkan tangan bandar
+    let historyElement = document.getElementById('historyDiv'); // Elemen untuk menampilkan riwayat permainan
+    let dealButton = document.getElementById('deal-button'); // Tombol untuk membagikan kartu
+    let hitButton = document.getElementById('hit-button'); // Tombol untuk menarik kartu
+    let standButton = document.getElementById('stand-button'); // Tombol untuk berhenti
+    let doubleButton = document.getElementById('double-button'); // Tombol untuk menggandakan taruhan
+
+
+    function updateDisplay() {
+    balanceElement.textContent = game.playerMoney; // Memperbarui tampilan saldo pemain
+    betElement.textContent = game.currentBet; // Memperbarui tampilan taruhan saat ini
+    playerTotalElement.textContent = game.calculateHand(game.playerHand); // Memperbarui total tangan pemain
+    dealerTotalElement.textContent = game.calculateHand(game.dealerHand); // Memperbarui total tangan bandar
+    displayHand(game.playerHand, playerHandElement); // Menampilkan tangan pemain
+    displayHand(game.dealerHand, dealerHandElement); // Menampilkan tangan bandar
+    updateStatistics(); // Memperbarui statistik permainan
+}
+
+
+function updateStatistics() {
+    document.getElementById('games-played').textContent = game.gamesPlayed; // Memperbarui jumlah permainan yang dimainkan
+    document.getElementById('games-won').textContent = game.gamesWon; // Memperbarui jumlah kemenangan
+    document.getElementById('games-lost').textContent = game.gamesLost; // Memperbarui jumlah kekalahan
+    document.getElementById('games-tied').textContent = game.gamesTied; // Memperbarui jumlah seri
+}
+
+
+function flipCard(cardElement) {
+    cardElement.classList.add('flipped'); // Menambahkan kelas flipped untuk efek flip
+}
+
+
+function displayHand(hand, handElement) {
+    handElement.innerHTML = ''; // Mengosongkan elemen tangan
+    for (let card of hand) {
+        const cardDiv = document.createElement('div'); // Membuat elemen div untuk kartu
+        cardDiv.classList.add('card', 'bg-white', 'text-blue-900', 'p-4', 'rounded-lg', 'w-20', 'h-32', 'flex', 'items-center', 'justify-center', 'animate__animated', 'animate__fadeInUp');
+        cardDiv.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">${card.toString()}</div>
+                <div class="card-back">${card.toString()}</div>
+            </div>
+        `; // Menambahkan representasi kartu
+        handElement.appendChild(cardDiv); // Menambahkan kartu ke elemen tangan
+        setTimeout(() => flipCard(cardDiv), 300); // Menerapkan efek flip setelah delay
+    }
+}
+
+function addToHistory(message) {
+    let newMessage = document.createElement('p'); // Membuat elemen paragraf baru untuk pesan
+    newMessage.textContent = message; // Menetapkan teks pesan
+    historyElement.appendChild(newMessage); // Menambahkan pesan ke elemen riwayat
+}
+
+
+function resetGame() {
+    game = new Game(); // Membuat instance permainan baru
+    document.getElementById('game-over').classList.add('hidden'); // Menyembunyikan pesan game over
+    updateDisplay(); // Memperbarui tampilan permainan
+    enableBetting(); // Mengaktifkan kembali taruhan
+}
+
+function enableBetting() {
+    dealButton.disabled = false; // Mengaktifkan tombol deal
+    hitButton.disabled = true; // Menonaktifkan tombol hit
+    standButton.disabled = true; // Menonaktifkan tombol stand
+    doubleButton.disabled = true; // Menonaktifkan tombol double
+}
+
+function disableBetting() {
+    dealButton.disabled = true; // Menonaktifkan tombol deal
+    hitButton.disabled = false; // Mengaktifkan tombol hit
+    standButton.disabled = false; // Mengaktifkan tombol stand
+    doubleButton.disabled = false; // Mengaktifkan tombol double
+}
+
+    document.querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', function() {
+        const betAmount = parseInt(this.getAttribute('data-value')); // Mengambil nilai taruhan dari atribut data
+        if (game.placeBet(betAmount)) { // Menempatkan taruhan jika memungkinkan
+            updateDisplay(); // Memperbarui tampilan
+            disableBetting(); // Menonaktifkan taruhan
+        } else {
+            messageElement.textContent = 'Saldo tidak mencukupi untuk taruhan ini.'; // Pesan jika saldo tidak mencukupi
+        }
+    });
+});
+
+
+dealButton.addEventListener('click', function() {
+    if (game.currentBet < 100) {
+        messageElement.textContent = 'Taruhan minimal adalah $100.'; // Pesan jika taruhan kurang dari 100
+        return;
+    }
+    game.deal(); // Memanggil fungsi untuk membagikan kartu
+    messageElement.textContent = ''; // Mengosongkan pesan
+    updateDisplay(); // Memperbarui tampilan
+    disableBetting(); // Menonaktifkan taruhan
+    hitButton.disabled = false; // Mengaktifkan tombol hit
+    standButton.disabled = false; // Mengaktifkan tombol stand
+    doubleButton.disabled = false; // Mengaktifkan tombol double
+
+    playSound('cardSound'); // Memainkan suara kartu
+    setTimeout(() => playSound('cardSound'), 300); // Memainkan suara kartu setelah delay
+});
+
+
+hitButton.addEventListener('click', function() {
+    playSound('cardSound'); // Memainkan suara kartu
+    if (!game.hit(game.playerHand)) { // Menarik kartu untuk pemain
+        messageElement.textContent = 'Busted! Anda kalah.'; // Pesan jika pemain bust
+        game.gamesPlayed += 1; // Menambah jumlah permainan yang dimainkan
+        game.gamesLost += 1; // Menambah jumlah kekalahan
+        game.gameOver = true; // Menandai permainan berakhir
+        updateDisplay(); // Memperbarui tampilan
+        enableBetting(); // Mengaktifkan kembali taruhan
+        addToHistory('Player busted, Dealer won.'); // Menambahkan riwayat
+        playSound('loseSound'); // Memainkan suara kalah
+    }
+    updateDisplay(); // Memperbarui tampilan
+    if (game.calculateHand(game.playerHand) >= 21) { // Mengecek jika total pemain 21 atau lebih
+        game.dealerPlay(); // Memanggil fungsi giliran bandar
+        game.endRound(); // Mengakhiri ronde
+    }
+});
+
+standButton.addEventListener('click', function() {
+    game.dealerPlay(); // Memanggil fungsi giliran bandar
+    game.endRound(); // Mengakhiri ronde
+
+    let playerTotal = game.calculateHand(game.playerHand); // Menghitung total tangan pemain
+    let dealerTotal = game.calculateHand(game.dealerHand); // Menghitung total tangan bandar
+
+    // Memeriksa hasil permainan
+    if (dealerTotal > 21 || playerTotal > dealerTotal) {
+        messageElement.textContent = 'Anda menang!'; // Pesan jika pemain menang
+        game.playerMoney += game.currentBet * 2; // Menghitung saldo pemain
+        game.gamesWon += 1; // Menambah jumlah kemenangan
+        addToHistory('Player won the game.'); // Menambahkan riwayat
+        playSound('winSound'); // Memainkan suara menang
+    } else if (playerTotal === dealerTotal) {
+        messageElement.textContent = 'Seri!'; // Pesan jika seri
+        game.playerMoney += game.currentBet; // Mengembalikan taruhan ke pemain
+        game.gamesTied += 1; // Menambah jumlah seri
+        addToHistory('It\'s a tie.'); // Menambahkan riwayat
+    } else {
+        messageElement.textContent = 'Dealer menang!'; // Pesan jika bandar menang
+        game.gamesLost += 1; // Menambah jumlah kekalahan
+        addToHistory('Dealer won the game.'); // Menambahkan riwayat
+        playSound('loseSound'); // Memainkan suara kalah
+    }
+    
+    game.gameOver = true; // Menandai permainan berakhir
+    updateDisplay(); // Memperbarui tampilan
+    enableBetting(); // Mengaktifkan kembali taruhan
+
+    if (game.playerMoney <= 0) // Mengecek saldo pemain
+        document.getElementById('game-over').classList.remove('hidden'); // Menampilkan pesan game over
+        messageElement.textContent = 'Game Over! Saldo Anda habis.'; // Pesan jika saldo habis
+        playSound('loseSound'); // Memainkan suara kalah
+});
+
+doubleButton.addEventListener('click', function() {
+    if (game.currentBet * 2 <= game.playerMoney) { // Mengecek apakah saldo cukup untuk menggandakan
+        game.playerMoney -= game.currentBet; // Mengurangi saldo pemain
+        game.currentBet *= 2; // Menggandakan taruhan
+        messageElement.textContent = 'Taruhan Anda digandakan!'; // Pesan konfirmasi
+        if (!game.hit(game.playerHand)) { // Menarik kartu untuk pemain
+            messageElement.textContent = 'Busted! Anda kalah.'; // Pesan jika pemain bust
+            game.gamesPlayed += 1; 
+            game.gamesLost += 1; 
+            game.gameOver = true; 
+            updateDisplay();
+            enableBetting(); 
+            addToHistory('Player busted after doubling down, Dealer won.'); // Menambahkan riwayat
+            playSound('loseSound'); 
+        } else {
+            game.dealerPlay(); 
+            game.endRound();
+        }
+    } else {
+        messageElement.textContent = 'Saldo tidak cukup untuk menggandakan taruhan.';
+    }
+    updateDisplay();
+});
+
+    updateDisplay();
+    enableBetting();
+
+</script>
+</body>
+</html>
