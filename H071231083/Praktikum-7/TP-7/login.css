@@ -1,0 +1,62 @@
+body {
+    background-image: url('image/Backgroundku.png');
+    font-family: 'Poppins', Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-size: cover;
+}
+
+.container {
+    background-color: rgba(0, 0, 10, 0.4);
+    width: 500px;
+    height: 500px;
+    /* background:transparent rgb(0, 0, 10); */
+}
+
+.container h2 {
+    font-family: Cooper;
+    color: #DFD0B8;
+}
+
+.mb-4 input {
+    background-color: #DFD0B8;
+}
+
+.mb-4 label {
+    color: #DFD0B8;
+}
+
+.mb-6 input {
+    background-color: #DFD0B8;
+}
+
+.mb-6 label {
+    color: #DFD0B8;
+}
+
+.container button {
+    background-color: #948979;
+}
+
+.container button:hover {
+    background-color: #DFD0B8;
+}
+
+.container h2 {
+    color: #DFD0B8;
+    font-size: 30px;
+}
+
+.container p {
+    color: #DFD0B8;
+}
+
+.container a {
+    color: #DFD0B8;
+}
+
+.container a:hover {
+    color: #948979;
+}

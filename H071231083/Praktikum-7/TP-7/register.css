@@ -1,0 +1,41 @@
+body {
+    background-image: url('image/Backgroundku.png');
+    font-family: 'Poppins', Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-size: cover;
+}
+
+.container form {
+    background-color: rgba(0, 0, 10, 0.4);
+    width: 430px;
+}
+
+.mb-4 input, .mb-6 input, .mb-6 select {
+    background-color: #DFD0B8;
+}
+
+.mb-4 label, .mb-4 p, .mb-6 label, h2, .inline-block {
+    color: #DFD0B8;
+}
+
+.inline-block:hover {
+    color: #948979;
+}
+
+.shadow option {
+    background-color: #DFD0B8;
+    color: #3C5B6F;
+}
+
+
+.flex button {
+    background-color: #948979;
+}
+
+.flex button:hover {
+    background-color: #DFD0B8;
+    color: #948979;
+}
